@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'carts.apps.CartsConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
+    'meiduo_admin.apps.meiduo_adminConfig',
 ]
 
 MIDDLEWARE = [
@@ -323,7 +324,9 @@ ALIPAY_URL = "https://openapi.alipaydev.com/gateway.do" # 网关地址
 ALIPAY_DEBUG = True # 是否使用沙箱环境
 ALIPAY_RETURN_URL = "http://www.meiduo.site:8080/pay_success.html"
 
-
-
+REST_FRAMEWORK = {
+    # 指定DRF框架的异常处理函数
+    'EXCEPTION_HANDLER': 'meiduo_admin.utils.exceptions.exception_handler',
+}
 
 
