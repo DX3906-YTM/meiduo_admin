@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import sys
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # 内层`meiduo_mall`目录
@@ -53,7 +54,7 @@ INSTALLED_APPS = [
     'carts.apps.CartsConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
-    'meiduo_admin.apps.meiduo_adminConfig',
+    'meiduo_admin.apps.MeiduoAdminConfig',
 ]
 
 MIDDLEWARE = [
@@ -241,11 +242,12 @@ LOGGING = {
 AUTH_USER_MODEL = 'users.User'
 
 # CORS跨域请求白名单设置
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:8080',
-    'http://www.meiduo.site:8080',
-    'http://www.meiduo.site',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'http://127.0.0.1:8080',
+#     'http://www.meiduo.site:8080',
+#     'http://www.meiduo.site',
+# )
+CORS_ORIGIN_ALLOW_ALL = True  # 如果为True，则将不使用白名单，并且将接受所有来源。默认为False
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 
 # 指定自定义的用户认证后端类
@@ -327,6 +329,19 @@ ALIPAY_RETURN_URL = "http://www.meiduo.site:8080/pay_success.html"
 REST_FRAMEWORK = {
     # 指定DRF框架的异常处理函数
     'EXCEPTION_HANDLER': 'meiduo_admin.utils.exceptions.exception_handler',
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+            # 引入JWT认证机制，当客户端将jwt token传递给服务器之后
+            # 此认证机制会自动校验jwt token的有效性，无效会直接返回401(未认证错误)
+            'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.BasicAuthentication',
+        ),
 }
 
+# JWT扩展配置
+JWT_AUTH = {
+    # 设置生成jwt token的有效时间
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+}
 
