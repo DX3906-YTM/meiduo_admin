@@ -6,7 +6,7 @@ chardet==3.0.4
 defusedxml==0.6.0
 diff-match-patch==20181111
 Django==2.2.5
-django-celery-results==1.2.1
+django-celery-results==2.4.0
 django-cors-headers==3.2.1
 django-crispy-forms==1.9.1
 django-crontab==0.7.1
